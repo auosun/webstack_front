@@ -1,7 +1,10 @@
 import React from "react";
 import FetchBase from "./base/fetch";
 
+
 class Menu extends FetchBase {
+    BACKEND_URL_KEY = 'menu'
+
     render() {
         const {error, isLoaded, items} = this.state
         if (error) {

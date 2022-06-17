@@ -1,4 +1,5 @@
 import React from "react";
+import {BACKEND_URL} from "../../constant"
 
 class FetchBase extends React.Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class FetchBase extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://127.0.0.1:8000/main/menu/")
+        fetch(BACKEND_URL('menu'))
             .then(res => res.json())
             .then(
                 (result) => {
