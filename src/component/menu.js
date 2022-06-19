@@ -3,7 +3,7 @@ import FetchBase from "./base/fetch";
 
 
 class Menu extends FetchBase {
-    BACKEND_URL_KEY = 'menu'
+    BACKEND_URL_KEY = 'group'
 
     render() {
         const {error, isLoaded, items} = this.state

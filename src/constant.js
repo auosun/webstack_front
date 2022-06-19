@@ -1,8 +1,8 @@
 const BACKEND = "http://127.0.0.1:8000/"
 
 const PATH = new Map([
-    ["menu", "main/menu/"],
-    ["websites", '']
+    ["group", "main/menu/"],
+    ["sites", 'main/']
 ]);
 
 
