@@ -38,24 +38,42 @@ class MenuTag extends FetchBase {
 
     constructor(props) {
         super(props);
-        this.site_state = {
-            site_error: null,
-            site_isLoaded: false,
-            site_items: []
-        };
+        this.state = {
+            site_state: {
+                isLoaded: false,
+                item_map: {},
+                error: null
+            }
+        }
     }
 
     fetch_sites(params) {
         fetch(BACKEND_URL('sites') + '?' + new URLSearchParams(params).toString())
             .then(res => res.json())
             .then(data => {
-                this.site_state.site_isLoaded = true
-                this.site_state.site_items = data
+                const site_map = new Map()
+                data.forEach(function (element) {
+                    if (!site_map.has(element['group'])) {
+                        site_map.set(element['group'], []);
+                    }
+
+                    site_map.get(element['group']).push(element);
+                })
+
+                this.setState({
+                    site_state: {
+                        isLoaded: true,
+                        item_map: site_map
+                    }
+                })
             })
             .catch((error) => {
-                this.site_state.site_isLoaded = true
-                this.site_state.site_error = error
-                console.log(error)
+                this.setState({
+                    site_state: {
+                        isLoaded: true,
+                        error: error
+                    }
+                })
             })
     }
 
@@ -65,22 +83,12 @@ class MenuTag extends FetchBase {
     }
 
     render() {
-        const {error, isLoaded, items} = this.state
-        const {site_error, site_isLoaded, site_items} = this.site_state
-        if (error || site_error) {
-            return <div>Error: {error ? error.message : site_error.message}</div>
-        } else if (!isLoaded || !site_isLoaded) {
+        const {error, isLoaded, items, site_state} = this.state
+        if (error || site_state.error) {
+            return <div>Error: {error.message}</div>
+        } else if (!isLoaded || !site_state.isLoaded) {
             return <div>Loading</div>
         } else {
-            let site_map = new Map()
-            site_items.forEach(function (element) {
-                if (!site_map.has(element['group'])) {
-                    site_map.set(element['group'], []);
-                }
-
-                site_map.get(element['group']).push(element);
-            })
-
             return (
                 <>
                     {items.map(item => (
@@ -89,8 +97,8 @@ class MenuTag extends FetchBase {
                                 <i className="linecons-tag" style={{"margin-right": "7px"}} id={item.name}/>
                                 {item.name}
                             </h4>
-                            <SiteList value={site_map.get(item.id) ? site_map.get(item.id) : []}/>
-                            <br />
+                            <SiteList value={site_state.item_map.get(item.id) ? site_state.item_map.get(item.id) : []}/>
+                            <br/>
                         </>
                     ))}
                 </>
