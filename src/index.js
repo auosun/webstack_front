@@ -4,6 +4,7 @@ import './index.css';
 import Menu from './component/menu'
 import Block from './component/block'
 import reportWebVitals from './reportWebVitals';
+import Nav from "./component/nav";
 
 const menu = ReactDOM.createRoot(document.getElementById('menu'));
 menu.render(
@@ -13,6 +14,11 @@ menu.render(
 const block = ReactDOM.createRoot(document.getElementById('block'));
 block.render(
     <Block />
+)
+
+const nav = ReactDOM.createRoot(document.getElementById('nav'));
+nav.render(
+    <Nav />
 )
 
 // If you want to start measuring performance in your app, pass a function
