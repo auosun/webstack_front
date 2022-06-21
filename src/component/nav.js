@@ -14,20 +14,20 @@ class EnvNavItems extends FetchBase {
         } else {
             return (
                 <li className="dropdown hover-line language-switcher">
-                    <a href="" className="dropdown-toggle" data-toggle="dropdown">
+                    <a className="dropdown-toggle" data-toggle="dropdown">
                         {/*<img src={process.env.PUBLIC_URL+'/assets/images/flags/flag-cn.png'} alt="flag-cn"/> */}
                         默认环境
                     </a>
                     <ul className="dropdown-menu languages">
                         <li className="active">
-                            <a href="">
+                            <a>
                                 {/*<img src={process.env.PUBLIC_URL+'/assets/images/flags/flag-cn.png'} alt="flag-cn"/> */}
                                 默认环境
                             </a>
                         </li>
                         {items.map(item => (
                             <li className="active">
-                                <a href="">
+                                <a>
                                     {/*<img src={process.env.PUBLIC_URL+'/assets/images/flags/flag-cn.png'} alt="flag-cn"/> */}
                                     {item.name}
                                 </a>
@@ -48,7 +48,7 @@ class Nav extends React.Component {
             <nav className="navbar user-info-navbar" role="navigation">
                 <ul className="user-info-menu left-links list-inline list-unstyled">
                     <li className="hidden-sm hidden-xs">
-                        <a href="#" data-toggle="sidebar">
+                        <a data-toggle="sidebar">
                             <i className="fa-bars"></i>
                         </a>
                     </li>

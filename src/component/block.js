@@ -14,11 +14,11 @@ class SiteList extends React.Component {
                              data-toggle="tooltip" data-placement="bottom" title=""
                              data-original-title={item.title}>
                             <div className="xe-comment-entry">
-                                <a href="" className="xe-user-img">
+                                <a className="xe-user-img">
                                     <img src={item.icon} className="lozad img-circle" width="40" alt=""/>
                                 </a>
                                 <div className="xe-comment">
-                                    <a href="" className="xe-user-name overflowClip_1">
+                                    <a className="xe-user-name overflowClip_1">
                                         <strong>{item.name}</strong>
                                     </a>
                                     <p className="overflowClip_2">{item.description}</p>

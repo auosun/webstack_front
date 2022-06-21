@@ -24,7 +24,7 @@ class Menu extends FetchBase {
                     ))}
 
                     <li>
-                        <a href="">
+                        <a>
                             <i className="linecons-heart"></i>
                             <span className="tooltip-blue">关于本站</span>
                             <span className="label label-Primary pull-right hidden-collapsed">♥︎</span>
