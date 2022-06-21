@@ -1,4 +1,4 @@
-const BACKEND = "http://127.0.0.1:8000/"
+const BACKEND = "https://nav.jzy.pub/api/"
 
 const PATH = new Map([
     ["group", "main/menu/"],
