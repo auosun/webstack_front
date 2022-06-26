@@ -1,5 +1,5 @@
 import React from "react";
-import FetchBase from "./base/fetch";
+import FetchBase from "../base/fetch";
 
 
 class EnvNavItems extends FetchBase {

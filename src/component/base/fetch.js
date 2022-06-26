@@ -3,6 +3,7 @@ import {BACKEND_URL} from "../../constant"
 
 class FetchBase extends React.Component {
     BACKEND_URL_KEY = 'group'
+
     constructor(props) {
         super(props);
         this.state = {
@@ -12,14 +13,22 @@ class FetchBase extends React.Component {
         };
     }
 
+    getUrl() {
+        return BACKEND_URL(this.BACKEND_URL_KEY)
+    }
+
+    exec_result(result) {
+        return result
+    }
+
     componentDidMount() {
-        fetch(BACKEND_URL(this.BACKEND_URL_KEY))
+        fetch(this.getUrl())
             .then(res => res.json())
             .then(
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        items: result
+                        items: this.exec_result(result)
                     });
                 },
 

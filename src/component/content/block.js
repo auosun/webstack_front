@@ -1,6 +1,6 @@
-import FetchBase from "./base/fetch";
+import FetchBase from "../base/fetch";
 import React from "react";
-import {BACKEND_URL} from "../constant";
+import {BACKEND_URL} from "../../constant";
 
 
 class SiteList extends React.Component {
@@ -33,71 +33,49 @@ class SiteList extends React.Component {
 }
 
 
-class MenuTag extends FetchBase {
-    BACKEND_URL_KEY = 'group'
+class Block extends FetchBase {
+    BACKEND_URL_KEY = 'sites'
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            site_state: {
-                isLoaded: false,
-                item_map: {},
-                error: null
-            }
+    getUrl() {
+        if (this.props.hasOwnProperty("params")){
+            return super.getUrl() + '?' + new URLSearchParams(this.props.params).toString()
         }
-    }
 
-    fetch_sites(params) {
-        fetch(BACKEND_URL('sites') + '?' + new URLSearchParams(params).toString())
-            .then(res => res.json())
-            .then(data => {
-                const site_map = new Map()
-                data.forEach(function (element) {
-                    if (!site_map.has(element['group'])) {
-                        site_map.set(element['group'], []);
-                    }
-
-                    site_map.get(element['group']).push(element);
-                })
-
-                this.setState({
-                    site_state: {
-                        isLoaded: true,
-                        item_map: site_map
-                    }
-                })
-            })
-            .catch((error) => {
-                this.setState({
-                    site_state: {
-                        isLoaded: true,
-                        error: error
-                    }
-                })
-            })
+        return super.getUrl();
     }
 
     componentDidMount() {
         super.componentDidMount();
-        this.fetch_sites({})
+    }
+
+    exec_result(result) {
+        const site_map = new Map()
+        result.forEach(function (element) {
+            if (!site_map.has(element['group'])) {
+                site_map.set(element['group'], []);
+            }
+
+            site_map.get(element['group']).push(element);
+        })
+        return site_map
     }
 
     render() {
-        const {error, isLoaded, items, site_state} = this.state
-        if (error || site_state.error) {
+        const {error, isLoaded, items } = this.state
+        if (error) {
             return <div>Error: {error.message}</div>
-        } else if (!isLoaded || !site_state.isLoaded) {
+        } else if (!isLoaded) {
             return <div>Loading</div>
         } else {
             return (
                 <>
-                    {items.map(item => (
+                    {this.props.groups.map(item => (
                         <>
                             <h4 className="text-gray">
                                 <i className="linecons-tag" style={{"margin-right": "7px"}} id={item.name}/>
                                 {item.name}
                             </h4>
-                            <SiteList value={site_state.item_map.get(item.id) ? site_state.item_map.get(item.id) : []}/>
+                            <SiteList value={items.get(item.id) ? items.get(item.id) : []}/>
                             <br/>
                         </>
                     ))}
@@ -105,15 +83,6 @@ class MenuTag extends FetchBase {
             )
         }
     }
-}
-
-
-function Block() {
-    return (
-        <div>
-            <MenuTag/>
-        </div>
-    );
 }
 
 export default Block;
