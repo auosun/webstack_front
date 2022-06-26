@@ -36,16 +36,18 @@ class SiteList extends React.Component {
 class Block extends FetchBase {
     BACKEND_URL_KEY = 'sites'
 
+    constructor(props) {
+        super(props);
+        this.getUrl = this.getUrl.bind(this)
+    }
+
     getUrl() {
-        if (this.props.hasOwnProperty("params")){
+        console.log(this.props.params)
+        if (this.props.params["env"] !== 'default'){
             return super.getUrl() + '?' + new URLSearchParams(this.props.params).toString()
         }
 
         return super.getUrl();
-    }
-
-    componentDidMount() {
-        super.componentDidMount();
     }
 
     exec_result(result) {
@@ -60,7 +62,14 @@ class Block extends FetchBase {
         return site_map
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.params !== prevProps.params) {
+            this.fetchRest()
+        }
+    }
+
     render() {
+
         const {error, isLoaded, items } = this.state
         if (error) {
             return <div>Error: {error.message}</div>
@@ -69,6 +78,7 @@ class Block extends FetchBase {
         } else {
             return (
                 <>
+                    {/*{console.log(this.state.params)}*/}
                     {this.props.groups.map(item => (
                         <>
                             <h4 className="text-gray">

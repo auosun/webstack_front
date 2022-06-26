@@ -11,6 +11,7 @@ class FetchBase extends React.Component {
             isLoaded: false,
             items: []
         };
+        this.fetchRest = this.fetchRest.bind(this)
     }
 
     getUrl() {
@@ -21,7 +22,7 @@ class FetchBase extends React.Component {
         return result
     }
 
-    componentDidMount() {
+    fetchRest() {
         fetch(this.getUrl())
             .then(res => res.json())
             .then(
@@ -39,6 +40,21 @@ class FetchBase extends React.Component {
                     })
                 }
             )
+    }
+
+    componentDidMount() {
+        this.fetchRest()
+    }
+
+
+    componentWillUnmount() {
+        this.setState(
+            {
+                error: null,
+                isLoaded: false,
+                items: []
+            }
+        )
     }
 }
 

@@ -2,11 +2,24 @@ import React from "react";
 import Nav from "./nav";
 import Block from "./block";
 class MainContent extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            environment: 'default'
+        }
+        this.setEnvironment = this.setEnvironment.bind(this)
+    }
+
+    setEnvironment(env) {
+        this.setState({environment: env})
+    }
+
     render() {
         return (
             <div className="main-content">
-                <Nav />
-                <Block groups={this.props.groups} params={{env: 1}}/>
+                <Nav environment={this.state.environment} setEnvironment={this.setEnvironment} />
+                <Block groups={this.props.groups} params={{env: this.state.environment}} />
 
                 <footer className="main-footer footer-type-1" style={{
                     position:"fixed",
