@@ -1,33 +1,63 @@
 import FetchBase from "../base/fetch";
 import React from "react";
-import {BACKEND_URL} from "../../constant";
+
+
+class Site extends React.Component {
+    render() {
+        return (
+            <div className="col-sm-3">
+                <div className="xe-widget xe-conversations box2 label-info"
+                     onClick={() => window.open(this.props.value.url, '_blank')}
+                     data-toggle="tooltip" data-placement="bottom" title=""
+                     data-original-title={this.props.value.title}>
+                    <div className="xe-comment-entry">
+                        <a className="xe-user-img">
+                            <img src={this.props.value.icon} className="lozad img-circle" width="40" alt=""/>
+                        </a>
+                        <div className="xe-comment">
+                            <a className="xe-user-name overflowClip_1">
+                                <strong>{this.props.value.name}</strong>
+                            </a>
+                            <p className="overflowClip_2">{this.props.value.description}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
 
 
 class SiteList extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    sliceToLists(value) {
+        const items = []
+        value.forEach(function (item, index) {
+            if (items.length === (Math.floor(index/4))){
+                items.push([])
+            }
+
+            items[Math.floor(index/4)].push(item)
+        })
+
+        return items
+    }
+
     render() {
         return (
-            <div className="row">
-                {this.props.value.map(item => (
-                    <div className="col-sm-3">
-                        <div className="xe-widget xe-conversations box2 label-info"
-                             onClick={() => window.open(item.url, '_blank')}
-                             data-toggle="tooltip" data-placement="bottom" title=""
-                             data-original-title={item.title}>
-                            <div className="xe-comment-entry">
-                                <a className="xe-user-img">
-                                    <img src={item.icon} className="lozad img-circle" width="40" alt=""/>
-                                </a>
-                                <div className="xe-comment">
-                                    <a className="xe-user-name overflowClip_1">
-                                        <strong>{item.name}</strong>
-                                    </a>
-                                    <p className="overflowClip_2">{item.description}</p>
-                                </div>
-                            </div>
-                        </div>
+            <>
+                {this.sliceToLists(this.props.value).map(sites => (
+                    <div className="row">
+                        {sites.map(site => (
+                            <Site value={site}/>
+                        ))}
                     </div>
                 ))}
-            </div>
+            </>
         )
     }
 }
@@ -42,8 +72,7 @@ class Block extends FetchBase {
     }
 
     getUrl() {
-        console.log(this.props.params)
-        if (this.props.params["env"] !== 'default'){
+        if (this.props.params["env"] !== 'default') {
             return super.getUrl() + '?' + new URLSearchParams(this.props.params).toString()
         }
 
@@ -70,7 +99,7 @@ class Block extends FetchBase {
 
     render() {
 
-        const {error, isLoaded, items } = this.state
+        const {error, isLoaded, items} = this.state
         if (error) {
             return <div>Error: {error.message}</div>
         } else if (!isLoaded) {
@@ -78,7 +107,6 @@ class Block extends FetchBase {
         } else {
             return (
                 <>
-                    {/*{console.log(this.state.params)}*/}
                     {this.props.groups.map(item => (
                         <>
                             <h4 className="text-gray">
