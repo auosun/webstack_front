@@ -1,6 +1,7 @@
 import React from "react";
 import Nav from "./nav";
 import Block from "./block";
+import cookie from "react-cookies";
 
 
 class Footer extends React.Component {
@@ -33,18 +34,20 @@ class MainContent extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
-            environment: 'default'
+            environment: parseInt(cookie.load('web_env')) ? parseInt(cookie.load('web_env')) : 'default'
         }
+        console.log(this.state)
         this.setEnvironment = this.setEnvironment.bind(this)
     }
 
     setEnvironment(env) {
+        cookie.save('web_env', env)
         this.setState({environment: env})
     }
 
     render() {
-
         return (
             <div className="main-content">
                 <Nav environment={this.state.environment} setEnvironment={this.setEnvironment}/>
