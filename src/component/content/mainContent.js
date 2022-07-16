@@ -6,10 +6,6 @@ import cookie from "react-cookies";
 
 class Footer extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <footer className="main-footer sticky footer-type-1">
@@ -32,17 +28,11 @@ class Footer extends React.Component {
 
 class MainContent extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            environment: parseInt(cookie.load('web_env')) ? parseInt(cookie.load('web_env')) : 'default'
-        }
-        console.log(this.state)
-        this.setEnvironment = this.setEnvironment.bind(this)
+    state = {
+        environment: parseInt(cookie.load('web_env')) ? parseInt(cookie.load('web_env')) : 'default'
     }
 
-    setEnvironment(env) {
+    setEnvironment = (env) => {
         cookie.save('web_env', env)
         this.setState({environment: env})
     }

@@ -4,14 +4,10 @@ import {BACKEND_URL} from "../../constant"
 class FetchBase extends React.Component {
     BACKEND_URL_KEY = 'group'
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: null,
-            isLoaded: false,
-            items: []
-        };
-        this.fetchRest = this.fetchRest.bind(this)
+    state = {
+        error: null,
+        isLoaded: false,
+        items: []
     }
 
     getUrl() {
@@ -22,7 +18,7 @@ class FetchBase extends React.Component {
         return result
     }
 
-    fetchRest() {
+    fetchRest = () => {
         fetch(this.getUrl())
             .then(res => res.json())
             .then(

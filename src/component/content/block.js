@@ -30,10 +30,6 @@ class Site extends React.Component {
 
 class SiteList extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     sliceToLists(value) {
         const items = []
         value.forEach(function (item, index) {
@@ -65,11 +61,6 @@ class SiteList extends React.Component {
 
 class Block extends FetchBase {
     BACKEND_URL_KEY = 'sites'
-
-    constructor(props) {
-        super(props);
-        this.getUrl = this.getUrl.bind(this)
-    }
 
     getUrl() {
         if (this.props.params["env"] !== 'default') {
