@@ -71,6 +71,11 @@ class Nav extends React.Component {
                     </li>
                     <EnvNavItems environment={this.props.environment} setEnvironment={this.props.setEnvironment}/>
                 </ul>
+                <ul className="user-info-menu left-links list-inline list-unstyled" style={{float: "right"}}>
+                    <li>
+                        <a href="/api/admin">后台管理</a>
+                    </li>
+                </ul>
             </nav>
         )
     }
